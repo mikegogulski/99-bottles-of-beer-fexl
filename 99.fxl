@@ -1,0 +1,44 @@
+# By Mike Gogulski <mike@gogulski.com> 14 August 2011
+#
+# Fexl is a programming language based on pure functions.
+#
+# Language author: Patrick Chkoreff
+# Language home page: http://fexl.com/
+#
+# Tested under:
+#     Fexl version b12 published Mon 2011-08-08
+#     Linux 2.6.38-10-generic #46-Ubuntu SMP x86_64 GNU/Linux
+
+\end = (\end\item end)
+\string_from = (\x
+        string_type x x;
+        long_type x (long_string x);
+        x)
+\print = (\item string_put (string_from item))
+\nl = (print "
+")
+\T = (\T\F T)
+\F = (\T\F F)
+\<1 = (\n long_compare n 1 T)
+\p == (\l l () \h\t print h; p t;) 
+\-- = (\n long_sub n 1)
+\+ = (\a\b (string_append (string_from a) (string_from b)))
+\++ = (\a\b\c (+ (+ a b) c))
+\b = "bottle"
+\beer = " of beer"
+\wall = " on the wall"
+\bw = (+ beer wall)
+\do = (\n <1 n "Go to the store and buy some more, " "Take one down and pass it around, ")
+\pl = (\s ++ " " s "s")
+\bs = (\n\f
+    long_compare n 1
+        (++ (f "N" "n") "o more" (pl b))
+        (+ "1 " b)
+        (+ n (pl b)))
+\next = (\n <1 n 99 (-- n))
+\sing == (\n
+    p (item (bs n T); item (+ bw ", "); item (bs n F); item beer; item "."; end); nl;
+    p (item (do n); item (bs (next n) F); item bw; item "."; end); nl; nl;
+    <1 n () sing (-- n);
+    )
+sing 99;
